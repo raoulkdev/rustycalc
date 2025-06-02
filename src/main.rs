@@ -45,23 +45,23 @@ fn input_handling() -> (char, (f64, f64)) {
         .read_line(&mut operator_input)
         .expect("[ERR] => Failed to read operator");
     operator = operator_input.trim().chars().next().unwrap();
-    
+
     // Return operator and first + second number tuple
     (operator, numbers)
 }
 
 fn main() {
     // Welcome message
-    println!("Welcome to CLI Calculator");
-    
+    println!("Welcome to rustycalc");
+
     // Continuous input handling and calculation unless 'e' operator
     loop {
         // The user's calculation request: Operator, first and second number
         let calculation_request = input_handling();
-        
+
         // Result of the user's calculation request
         let result = calculate(calculation_request.0, calculation_request.1);
-        
+
         // Print result
         println!("Result: {}", result);
     }
