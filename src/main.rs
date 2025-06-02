@@ -1,3 +1,4 @@
+// Imports
 use std::io::{Write, stdin, stdout};
 
 // Calculate function
@@ -8,6 +9,7 @@ fn calculate(operator: char, numbers: (f64, f64)) -> f64 {
         '*' => numbers.0 * numbers.1,
         '/' => numbers.0 / numbers.1,
         '^' => numbers.0.powf(numbers.1),
+        'e' => std::process::exit(0),
         _ => 0.0,
     }
 }
@@ -37,21 +39,30 @@ fn input_handling() -> (char, (f64, f64)) {
     numbers.1 = number_2_input.trim().parse().unwrap();
 
     // Operator
-    print!("Operator (+, -, *, /, ^): ");
+    print!("Operator (+, -, *, /, ^, e to exit): ");
     stdout().flush().unwrap();
     stdin()
         .read_line(&mut operator_input)
         .expect("[ERR] => Failed to read operator");
     operator = operator_input.trim().chars().next().unwrap();
-
+    
+    // Return operator and first + second number tuple
     (operator, numbers)
 }
 
 fn main() {
+    // Welcome message
     println!("Welcome to CLI Calculator");
-
+    
+    // Continuous input handling and calculation unless 'e' operator
     loop {
-        let calculation = input_handling();
-        println!("Result: {}", calculate(calculation.0, calculation.1));
+        // The user's calculation request: Operator, first and second number
+        let calculation_request = input_handling();
+        
+        // Result of the user's calculation request
+        let result = calculate(calculation_request.0, calculation_request.1);
+        
+        // Print result
+        println!("Result: {}", result);
     }
 }
