@@ -1,22 +1,33 @@
 // Imports
 use std::io::{Write, stdin, stdout};
 
+// Operator enum
+enum Operator{
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+    Power,
+    Empty,
+    Exit
+}
+
 // Calculate function
-fn calculate(operator: char, numbers: (f64, f64)) -> f64 {
+fn calculate(operator: Operator, numbers: (f64, f64)) -> f64 {
     match operator {
-        '+' => numbers.0 + numbers.1,
-        '-' => numbers.0 - numbers.1,
-        '*' => numbers.0 * numbers.1,
-        '/' => numbers.0 / numbers.1,
-        '^' => numbers.0.powf(numbers.1),
-        'e' => std::process::exit(0),
-        _ => 0.0,
+        Operator::Add => numbers.0 + numbers.1,
+        Operator::Subtract => numbers.0 - numbers.1,
+        Operator::Multiply => numbers.0 * numbers.1,
+        Operator::Divide => numbers.0 / numbers.1,
+        Operator::Power => numbers.0.powf(numbers.1),
+        Operator::Empty => 0.0,
+        Operator::Exit => std::process::exit(0)
     }
 }
 
 // Handle input
-fn input_handling() -> (char, (f64, f64)) {
-    let mut operator = ' ';
+fn input_handling() -> (Operator, (f64, f64)) {
+    let operator: Operator;
     let mut numbers = (0.0, 0.0);
     let mut operator_input = String::new();
     let mut number_1_input = String::new();
@@ -44,7 +55,15 @@ fn input_handling() -> (char, (f64, f64)) {
     stdin()
         .read_line(&mut operator_input)
         .expect("[ERR] => Failed to read operator");
-    operator = operator_input.trim().chars().next().unwrap();
+    match operator_input.trim().chars().next().unwrap() {
+        '+' => operator = Operator::Add,
+        '-' => operator = Operator::Subtract,
+        '*' => operator = Operator::Multiply,
+        '/' => operator = Operator::Divide,
+        '^' => operator = Operator::Power,
+        'e' => operator = Operator::Exit,
+        _ => operator = Operator::Empty
+    }
 
     // Return operator and first + second number tuple
     (operator, numbers)
