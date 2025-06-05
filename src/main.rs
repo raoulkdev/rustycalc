@@ -2,14 +2,14 @@
 use std::io::{Write, stdin, stdout};
 
 // Operator enum
-enum Operator{
+enum Operator {
     Add,
     Subtract,
     Multiply,
     Divide,
     Power,
     Empty,
-    Exit
+    Exit,
 }
 
 // Calculate function
@@ -21,7 +21,7 @@ fn calculate(operator: Operator, numbers: (f64, f64)) -> f64 {
         Operator::Divide => numbers.0 / numbers.1,
         Operator::Power => numbers.0.powf(numbers.1),
         Operator::Empty => 0.0,
-        Operator::Exit => std::process::exit(0)
+        Operator::Exit => std::process::exit(0),
     }
 }
 
@@ -62,7 +62,7 @@ fn input_handling() -> (Operator, (f64, f64)) {
         '/' => operator = Operator::Divide,
         '^' => operator = Operator::Power,
         'e' => operator = Operator::Exit,
-        _ => operator = Operator::Empty
+        _ => operator = Operator::Empty,
     }
 
     // Return operator and first + second number tuple
